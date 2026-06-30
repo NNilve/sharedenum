@@ -12,5 +12,6 @@ String indices is guanteed to be same between client and server, but not between
 When writing Luau code, make sure to check `docs/style-guide.md`.
 
 ## Git / PR Rules
-- **Linting**: Before commiting, run `selene <list_of_files>`. If errors or warnings exist, fix that, and do this again.
+- **Type Analysis**: Before commiting, run `luau-lsp analyze <list_of_files>`, If errors or warnings exist, fix that, and do this again.
+- **Linting**: When Type Analysis is successful, run `selene <list_of_files>`. If errors or warnings exist, fix that, and do this again.
 - **Formatting**: If Linting result has no errors or warnings, run `stylua <list_of_files>`.
