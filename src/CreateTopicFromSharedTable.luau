@@ -26,7 +26,7 @@ const function Create<T>(sharedTable: TopicSharedTable<T>): Topic<T>
 	const namesTable = table.create(enumCount) :: { T & string }
 	const valuesTable: { [T & string]: number } = {}
 
-	for enumValue, enumName in sharedTable :: SharedTable do
+	for enumValue, enumName in sharedTable :: any do
 		if typeof(enumValue) == "number" then
 			if typeof(enumName) ~= "string" then
 				LogService:Error(
