@@ -1,5 +1,6 @@
 # Luau Guides
-
+## Identations
+Use 4 spaces
 ## Namings
 ### Functions
 - Use verbs for functions, or variables that are known to be function (will be referred as "Functions")
