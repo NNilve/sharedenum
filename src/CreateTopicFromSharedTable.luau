@@ -22,6 +22,18 @@ const function Create<T>(sharedTable: TopicSharedTable<T>): Topic<T>
 	end
 
 	const enumCount = SharedTable.size(sharedTable) - 1
+	if enumCount <= 0 then
+		LogService:Error("SharedEnum topic {TopicName} has no enums", {
+			TopicName = tostring(topicName),
+		})
+	end
+	if enumCount > 255 then
+		LogService:Error("SharedEnum topic {TopicName} enum count of {EnumCount} exceeded max count of {MaxCount}", {
+			TopicName = tostring(topicName),
+			EnumCount = enumCount,
+			MaxCount = 255,
+		})
+	end
 
 	const namesTable = table.create(enumCount) :: { T & string }
 	const valuesTable: { [T & string]: number } = {}
