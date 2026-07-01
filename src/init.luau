@@ -7,6 +7,16 @@ export type Topic<T> = Topic.Topic<T>
 export type TopicData<T> = Topic.TopicData<T>
 export type TopicSharedTable<T> = Types.TopicSharedTable<T>
 -- Public API Implementation
+
+--[=[
+	@function fromItemName
+	@within Topic
+
+	@param name string
+	@param ... ...string
+	@return Topic
+	@error "SharedEnum topic {TopicName} enum count of {EnumCount} exceeded max count of {MaxCount}" -- Too many possible enum variants is provided that cannot be fit in 1 byte.
+]=]
 function SharedEnum.fromItemName<T>(name: string, ...: T & string): Topic<T>
 	const fn = require("@self/CreateTopicFromItemName")
 	return fn(name, ...)
@@ -15,6 +25,13 @@ function SharedEnum.ToSharedTable<T>(topic: Topic<T>): TopicSharedTable<T>
 	const fn = require("@self/ConvertTopicToSharedTable")
 	return fn(topic)
 end
+--[=[
+	@function FromSharedTable
+	@within Topic
+	@param sharedTable SharedTable
+	@return Topic
+	@error "SharedEnum topic {TopicName} enum count of {EnumCount} exceeded max count of {MaxCount}" -- Too many possible enum variants is stored in SharedTable that cannot be fit in 1 byte.
+]=]
 function SharedEnum.FromSharedTable<T>(sharedTable: TopicSharedTable<T>): Topic<T>
 	const fn = require("@self/CreateTopicFromSharedTable")
 	return fn(sharedTable)
