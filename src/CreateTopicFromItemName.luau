@@ -59,6 +59,9 @@ const function Create<T>(topicName: string, ...: T): Topic<T>
 		TopicName = topicName,
 	}
 
+	table.freeze(namesTable)
+	table.freeze(valuesTable)
+
 	setmetatable(data, Topic)
 	return data
 end

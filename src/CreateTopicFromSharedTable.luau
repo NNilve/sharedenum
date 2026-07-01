@@ -64,6 +64,9 @@ const function Create<T>(sharedTable: TopicSharedTable<T>): Topic<T>
 		TopicName = topicName,
 	}
 
+	table.freeze(namesTable)
+	table.freeze(valuesTable)
+
 	setmetatable(data, Topic)
 	return data
 end
