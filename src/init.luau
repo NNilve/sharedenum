@@ -6,6 +6,7 @@ const Types = require("@self/Types")
 export type Topic<T> = Topic.Topic<T>
 export type TopicData<T> = Topic.TopicData<T>
 export type TopicSharedTable<T> = Types.TopicSharedTable<T>
+export type OldTypeSolver_Topic<T> = Types.OldTypeSolver_Topic<T>
 -- Public API Implementation
 
 --[=[
@@ -36,4 +37,21 @@ function SharedEnum.FromSharedTable<T>(sharedTable: TopicSharedTable<T>): Topic<
 	const fn = require("@self/CreateTopicFromSharedTable")
 	return fn(sharedTable)
 end
+
+-- For old type solver:
+const SharedEnum_OldTypeSolver = {}
+SharedEnum.OldTypeSolver = SharedEnum_OldTypeSolver
+
+function SharedEnum_OldTypeSolver.FromItemName<T>(name: string, ...: T & string): OldTypeSolver_Topic<T>
+	return SharedEnum.FromItemName(name, ...) :: any
+end
+
+function SharedEnum_OldTypeSolver.ToSharedTable<T>(topic: OldTypeSolver_Topic<T>): TopicSharedTable<T>
+	return SharedEnum.ToSharedTable(topic :: any)
+end
+
+function SharedEnum_OldTypeSolver.FromSharedTable<T>(sharedTable: TopicSharedTable<T>): OldTypeSolver_Topic<T>
+	return SharedEnum.FromSharedTable(sharedTable) :: any
+end
+
 return SharedEnum
