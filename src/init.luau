@@ -9,7 +9,7 @@ export type TopicSharedTable<T> = Types.TopicSharedTable<T>
 -- Public API Implementation
 
 --[=[
-	@function fromItemName
+	@function FromItemName
 	@within Topic
 
 	@param name string
@@ -17,7 +17,7 @@ export type TopicSharedTable<T> = Types.TopicSharedTable<T>
 	@return Topic
 	@error "SharedEnum topic {TopicName} enum count of {EnumCount} exceeded max count of {MaxCount}" -- Too many possible enum variants is provided that cannot be fit in 1 byte.
 ]=]
-function SharedEnum.fromItemName<T>(name: string, ...: T & string): Topic<T>
+function SharedEnum.FromItemName<T>(name: string, ...: T & string): Topic<T>
 	const fn = require("@self/CreateTopicFromItemName")
 	return fn(name, ...)
 end
