@@ -1,12 +1,15 @@
 # Luau Guides
-
+## Identations
+Use 4 spaces
 ## Namings
 ### Functions
-- Use verbs for functions, or variables that are known to be function
-- `PascalCase` when creating functions inside or outside function block, when in table key
-- `camelCase` when getting as function parameter
+- Use verbs for functions, or variables that are known to be function (will be referred as "Functions")
+- For "Functions" known to be `boolean` or `boolean?`, start with `is`, `was`, `has`, `can`, or `should`, end with affirmative statement or noun
+- `PascalCase` when creating "Functions" inside or outside function block, when in table key
+- `camelCase` when getting function variable as parameter
 ### Variables
 - Use nouns for variables or constants
+- For variables known to be `boolean` or `boolean?`, start with `is`, `was`, `has`, `can`, or `should`, end with affirmative statement or noun
 - `PascalCase` for variables, constants defined outside function block (between `function()` and its `end`)
 - `camelCase` for variables, constants defined inside function block
 - `UPPER_CASE` for constants defined outside function block with type of

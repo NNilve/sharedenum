@@ -1,0 +1,19 @@
+{
+    "name": "Test: SharedEnum",
+    "tree": {
+        "$className": "DataModel",
+        "ReplicatedStorage": {
+            "Packages": {
+                "$className": "Folder",
+                "SharedEnum": {
+                    "$path": "src"
+                }
+            }
+        },
+        "ServerScriptService": {
+            "Tests": {
+                "$path": "tests"
+            }
+        }
+    }
+}
