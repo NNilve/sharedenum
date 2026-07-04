@@ -10,20 +10,22 @@ on:
       - src/**
       - moonwave.toml
       - README.md
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: pages
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
   build:
     permissions:
       contents: read
-      pages: read
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -34,18 +36,17 @@ jobs:
         with:
           node-version: 22
 
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v6
-
       - name: Build Moonwave documentation
         run: npx --yes moonwave@1.4.2 build --out-dir build
 
       - name: Upload GitHub Pages artifact
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v4
         with:
           path: build
 
   deploy:
+    if: github.event_name != 'pull_request'
     needs: build
     permissions:
       pages: write
@@ -55,6 +56,9 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v6
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
