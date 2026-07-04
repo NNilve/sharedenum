@@ -7,7 +7,7 @@ export type TopicSharedTable<T> = SharedTable & { T } & { TopicName: string }
 
 export type OldTypeSolver_Topic<T> = {
 	TryGetNameFromValue: (OldTypeSolver_Topic<T>, value: number) -> T?,
-	TryGetValueFromName: (OldTypeSolver_Topic<T>, name: T) -> number?,
+	TryGetValueFromName: (OldTypeSolver_Topic<T>, name: string) -> number?,
 	GetNameFromValue: (OldTypeSolver_Topic<T>, value: number) -> T,
 	GetValueFromName: (OldTypeSolver_Topic<T>, name: T) -> number,
 }

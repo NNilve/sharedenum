@@ -44,7 +44,7 @@ end
 	@return number?
 ]=]
 @native
-function Topic.TryGetValueFromName<T>(self: Topic<T>, name: T): number?
+function Topic.TryGetValueFromName<T>(self: Topic<T>, name: string): number?
 	return self.EnumValues[name]
 end
 
