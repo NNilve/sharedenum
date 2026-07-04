@@ -81,7 +81,7 @@ end
 @native
 function Topic.GetValueFromName<T>(self: Topic<T>, name: T): number
 	const value = self.EnumValues[name]
-	if not name then
+	if not value then
 		task.synchronize()
 		LogService:Error("Enum '{EnumName}' not found in SharedEnum topic {TopicName}", {
 			EnumName = name,
