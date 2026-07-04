@@ -1,0 +1,8 @@
+title = 'sharedenum'
+gitSourceBranch = 'main'
+changelog = false
+classOrder = ['Topic']
+
+[docusaurus]
+onBrokenLinks = 'throw'
+tagline = 'Compact shared string enums for Roblox'
