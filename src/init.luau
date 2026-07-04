@@ -1,3 +1,4 @@
+local ConfigService = game:GetService("ConfigService")
 const SharedEnum = {}
 -- Module requirements
 const Topic = require("@self/Topic")
@@ -39,19 +40,14 @@ function SharedEnum.FromSharedTable<T>(sharedTable: TopicSharedTable<T>): Topic<
 end
 
 -- For old type solver:
-const SharedEnum_OldTypeSolver = {}
-SharedEnum.OldTypeSolver = SharedEnum_OldTypeSolver
-
-function SharedEnum_OldTypeSolver.FromItemName<T>(name: string, ...: T & string): OldTypeSolver_Topic<T>
-	return SharedEnum.FromItemName(name, ...) :: any
+const function GetOldTypeSolverVersion()
+	return SharedEnum :: {
+		FromItemName: <T>(name: string, ...(T & string)) -> OldTypeSolver_Topic<T>,
+		ToSharedTable: <T>(topic: OldTypeSolver_Topic<T>) -> TopicSharedTable<T>,
+		FromSharedTable: <T>(sharedTable: TopicSharedTable<T>) -> OldTypeSolver_Topic<T>,
+	}
 end
 
-function SharedEnum_OldTypeSolver.ToSharedTable<T>(topic: OldTypeSolver_Topic<T>): TopicSharedTable<T>
-	return SharedEnum.ToSharedTable(topic :: any)
-end
-
-function SharedEnum_OldTypeSolver.FromSharedTable<T>(sharedTable: TopicSharedTable<T>): OldTypeSolver_Topic<T>
-	return SharedEnum.FromSharedTable(sharedTable) :: any
-end
+SharedEnum.GetOldTypeSolverVersion = GetOldTypeSolverVersion
 
 return SharedEnum
