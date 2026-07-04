@@ -1,4 +1,4 @@
-local ConfigService = game:GetService("ConfigService")
+--!strict
 const SharedEnum = {}
 -- Module requirements
 const Topic = require("@self/Topic")
