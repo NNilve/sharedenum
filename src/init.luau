@@ -3,6 +3,7 @@ const SharedEnum = {}
 -- Module requirements
 const Topic = require("@self/Topic")
 const Types = require("@self/Types")
+const Const = require("@self/Const")
 -- Types
 export type Topic<T> = Topic.Topic<T>
 export type TopicData<T> = Topic.TopicData<T>
@@ -20,9 +21,16 @@ export type OldTypeSolver_Topic<T> = Types.OldTypeSolver_Topic<T>
 	@return Topic
 	@error "SharedEnum topic {TopicName} enum count of {EnumCount} exceeded max count of {MaxCount}" -- Too many possible enum variants is provided that cannot be fit in 1 byte.
 ]=]
-function SharedEnum.FromItemName<T>(name: string, sizeKind: "u8" | "u16", ...: T & string): Topic<T>
-	const fn = require("@self/CreateTopicFromItemName")
-	return fn(name, sizeKind, ...)
+function SharedEnum.FromItemName<T>(name: string, ...: T & string): Topic<T>
+	const fn = require("@self/CreateTopicFromItemNameWithSize")
+	const enumCount = select("#", ...)
+	if enumCount <= Const.SIZE_U8 then
+		return fn(name, "u8", ...)
+	elseif enumCount <= Const.SIZE_U16 then
+		return fn(name, "u16", ...)
+	else
+		error("too many arguments")
+	end
 end
 function SharedEnum.ToSharedTable<T>(topic: Topic<T>): TopicSharedTable<T>
 	const fn = require("@self/ConvertTopicToSharedTable")
@@ -37,6 +45,7 @@ end
 ]=]
 function SharedEnum.FromSharedTable<T>(sharedTable: TopicSharedTable<T>): Topic<T>
 	const fn = require("@self/CreateTopicFromSharedTable")
+local Const = require(script.Const)
 	return fn(sharedTable)
 end
 
