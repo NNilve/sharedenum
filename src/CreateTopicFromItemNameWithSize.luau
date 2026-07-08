@@ -73,7 +73,7 @@ const function Create<T>(topicName: string, size: "u8" | "u16", ...: T): Topic<T
 		EnumNames = namesTable,
 		EnumValues = valuesTable,
 		TopicName = topicName,
-		Size = size,
+		SizeKind = size,
 	}
 
 	table.freeze(namesTable)

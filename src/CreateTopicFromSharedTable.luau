@@ -62,6 +62,7 @@ const function Create<T>(sharedTable: TopicSharedTable<T>): Topic<T>
 		EnumNames = namesTable,
 		EnumValues = valuesTable,
 		TopicName = topicName,
+		SizeKind = sharedTable.SizeKind,
 	}
 
 	table.freeze(namesTable)
