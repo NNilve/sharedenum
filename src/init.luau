@@ -16,7 +16,6 @@ export type OldTypeSolver_Topic<T> = Types.OldTypeSolver_Topic<T>
 	@within Topic
 
 	@param name string
-	@param sizeKind string
 	@param ... ...string
 	@return Topic
 	@error "SharedEnum topic {TopicName} enum count of {EnumCount} exceeded max count of {MaxCount}" -- Too many possible enum variants is provided that cannot be fit in 1 byte.
@@ -45,7 +44,6 @@ end
 ]=]
 function SharedEnum.FromSharedTable<T>(sharedTable: TopicSharedTable<T>): Topic<T>
 	const fn = require("@self/CreateTopicFromSharedTable")
-local Const = require(script.Const)
 	return fn(sharedTable)
 end
 
