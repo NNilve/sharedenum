@@ -8,7 +8,7 @@ const Const = require("./Const")
 type TopicData<T> = Types.TopicData<T>
 type Topic<T> = Topic.Topic<T>
 -- Export function
-const function Create<T>(topicName: string, size: "u8" | "u16", ...: T): Topic<T>
+const function Create<T>(topicName: string, sizeKind: "u8" | "u16", ...: T): Topic<T>
 	if typeof(topicName) ~= "string" then
 		LogService:Error("SharedEnum topic name expected string, got {TopicNameType}, tostring: {TopicNameTostring}", {
 			TopicNameType = typeof(topicName),
@@ -16,14 +16,14 @@ const function Create<T>(topicName: string, size: "u8" | "u16", ...: T): Topic<T
 		})
 	end
 	local maxEnumCount
-	if size == "u8" then
+	if sizeKind == "u8" then
 		maxEnumCount = Const.SIZE_U8
-	elseif size == "u16" then
+	elseif sizeKind == "u16" then
 		maxEnumCount = Const.SIZE_U16
 	else
 		LogService:Error(
-			'Size "{SizeTostring}" is not valid argument,' .. "expected to be either u8 or u16",
-			{ SizeTostring = tostring(size) }
+			'SizeKind "{SizeKindTostring}" is not valid argument,' .. "expected to be either u8 or u16",
+			{ SizeKindTostring = tostring(sizeKind) }
 		)
 		error("never") -- actually unreachable, it's for linter
 	end
@@ -73,7 +73,7 @@ const function Create<T>(topicName: string, size: "u8" | "u16", ...: T): Topic<T
 		EnumNames = namesTable,
 		EnumValues = valuesTable,
 		TopicName = topicName,
-		SizeKind = size,
+		SizeKind = sizeKind,
 	}
 
 	table.freeze(namesTable)
