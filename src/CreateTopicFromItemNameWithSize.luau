@@ -3,12 +3,10 @@ local LogService = game:GetService("LogService")
 -- Module Requirements
 const Topic = require("./Topic")
 const Types = require("./Types")
+const Const = require("./Const")
 -- Types
 type TopicData<T> = Types.TopicData<T>
 type Topic<T> = Topic.Topic<T>
--- Internal Helper Constants
-const SIZE_U8 = 255
-const SIZE_U16 = 65535
 -- Export function
 const function Create<T>(topicName: string, size: "u8" | "u16", ...: T): Topic<T>
 	if typeof(topicName) ~= "string" then
@@ -19,14 +17,13 @@ const function Create<T>(topicName: string, size: "u8" | "u16", ...: T): Topic<T
 	end
 	local maxEnumCount
 	if size == "u8" then
-		maxEnumCount = SIZE_U8
+		maxEnumCount = Const.SIZE_U8
 	elseif size == "u16" then
-		maxEnumCount = SIZE_U16
+		maxEnumCount = Const.SIZE_U16
 	else
 		LogService:Error(
-			'Size "{SizeTostring}" is not valid argument,'
-			.. "expected to be either u8 or u16", 
-			{SizeTostring = tostring(size)}
+			'Size "{SizeTostring}" is not valid argument,' .. "expected to be either u8 or u16",
+			{ SizeTostring = tostring(size) }
 		)
 		error("never") -- actually unreachable, it's for linter
 	end
@@ -39,8 +36,7 @@ const function Create<T>(topicName: string, size: "u8" | "u16", ...: T): Topic<T
 	end
 	if enumCount > maxEnumCount then
 		LogService:Error(
-			"SharedEnum topic {TopicName} enum count of"
-			.. "{EnumCount} exceeded max count of {MaxCount}", 
+			"SharedEnum topic {TopicName} enum count of" .. "{EnumCount} exceeded max count of {MaxCount}",
 			{
 				TopicName = tostring(topicName),
 				EnumCount = enumCount,
@@ -59,7 +55,7 @@ const function Create<T>(topicName: string, size: "u8" | "u16", ...: T): Topic<T
 		if typeof(enumName) ~= "string" then
 			LogService:Error(
 				"Enum name at value {EnumValue} in SharedEnum topic {TopicName} "
-				.. "expected string, got {EnumNameType}, tostring: {EnumNameTostring}",
+					.. "expected string, got {EnumNameType}, tostring: {EnumNameTostring}",
 				{
 					EnumNameType = typeof(enumName),
 					EnumValue = enumValue,
@@ -77,7 +73,7 @@ const function Create<T>(topicName: string, size: "u8" | "u16", ...: T): Topic<T
 		EnumNames = namesTable,
 		EnumValues = valuesTable,
 		TopicName = topicName,
-		Size = size
+		Size = size,
 	}
 
 	table.freeze(namesTable)
