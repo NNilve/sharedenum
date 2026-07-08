@@ -31,6 +31,26 @@ function SharedEnum.FromItemName<T>(name: string, ...: T & string): Topic<T>
 		error("too many arguments")
 	end
 end
+--[=[
+	@function FromItemNameWithSize
+	@within Topic
+
+	@param name string
+	@param sizeKind string
+	@param ... ...string
+	@return Topic
+	@error "SharedEnum topic {TopicName} enum count of {EnumCount} exceeded max count of {MaxCount}" -- Too many possible enum variants is provided that cannot be fit in 1 byte.
+]=]
+function SharedEnum.FromItemNameWithSize<T>(
+	name: string,
+	sizeKind: "u8" | "u16",
+	...: T & string
+): Topic<T>
+	const fn = require("@self/CreateTopicFromItemNameWithSize")
+	return fn(name, sizeKind, ...)
+end
+
+
 function SharedEnum.ToSharedTable<T>(topic: Topic<T>): TopicSharedTable<T>
 	const fn = require("@self/ConvertTopicToSharedTable")
 	return fn(topic)
