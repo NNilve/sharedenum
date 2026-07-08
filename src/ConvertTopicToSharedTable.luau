@@ -10,6 +10,7 @@ type TopicSharedTable<T> = Types.TopicSharedTable<T>
 const function Convert<T>(topic: Topic<T>): TopicSharedTable<T>
 	const st = SharedTable.new(topic.EnumNames) :: TopicSharedTable<T>
 	st.TopicName = topic.TopicName
+	st.SizeKind = topic.SizeKind
 	const clone = SharedTable.cloneAndFreeze(st) :: TopicSharedTable<T>
 	return clone
 end

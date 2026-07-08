@@ -3,6 +3,7 @@ local LogService = game:GetService("LogService")
 -- Module Requirements
 const Topic = require("./Topic")
 const Types = require("./Types")
+const Const = require("./Const")
 -- Types
 type TopicData<T> = Topic.TopicData<T>
 type Topic<T> = Topic.Topic<T>
@@ -21,17 +22,31 @@ const function Create<T>(sharedTable: TopicSharedTable<T>): Topic<T>
 		})
 	end
 
+	const sizeKind = sharedTable.SizeKind
+	local maxEnumCount
+	if sizeKind == "u8" then
+		maxEnumCount = Const.SIZE_U8
+	elseif sizeKind == "u16" then
+		maxEnumCount = Const.SIZE_U16
+	else
+		LogService:Error(
+			'm "{SizeKindTostring}" is not valid argument,' .. "expected to be either u8 or u16",
+			{ SizeKindTostring = tostring(sizeKind) }
+		)
+		error("never") -- actually unreachable, it's for linter
+	end
+
 	const enumCount = SharedTable.size(sharedTable) - 1
 	if enumCount <= 0 then
 		LogService:Error("SharedEnum topic {TopicName} has no enums", {
 			TopicName = tostring(topicName),
 		})
 	end
-	if enumCount > 255 then
+	if enumCount > maxEnumCount then
 		LogService:Error("SharedEnum topic {TopicName} enum count of {EnumCount} exceeded max count of {MaxCount}", {
 			TopicName = tostring(topicName),
 			EnumCount = enumCount,
-			MaxCount = 255,
+			MaxCount = maxEnumCount,
 		})
 	end
 
@@ -62,7 +77,7 @@ const function Create<T>(sharedTable: TopicSharedTable<T>): Topic<T>
 		EnumNames = namesTable,
 		EnumValues = valuesTable,
 		TopicName = topicName,
-		SizeKind = sharedTable.SizeKind,
+		SizeKind = sizeKind,
 	}
 
 	table.freeze(namesTable)
