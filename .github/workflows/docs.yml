@@ -37,7 +37,7 @@ jobs:
           node-version: 22
 
       - name: Build Moonwave documentation
-        run: npx --yes moonwave@1.4.2 build --out-dir build
+        run: ./scripts/build-docs.sh
 
       - name: Upload GitHub Pages artifact
         if: github.event_name != 'pull_request'
